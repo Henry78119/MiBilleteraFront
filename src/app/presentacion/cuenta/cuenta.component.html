@@ -1,0 +1,42 @@
+<mat-card id="cuentas" *ngIf="!cuenta">
+      <mat-card-title>Mis cuentas</mat-card-title>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let cuenta of cuentas" >
+              <mat-icon matListIcon>{{this.getIcon(cuenta)}}</mat-icon>
+              <h3 matLine> {{cuenta.nombre}} </h3>
+              <span>{{cuenta.saldo | currency : COP}}</span>
+              <button mat-icon-button 
+                  color="primary" 
+                  (click)="this.showUpdateCuenta(cuenta)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button 
+                  color="accent" 
+                  routerLink="/movimientos/{{cuenta.id}}">
+                <mat-icon>list_alt</mat-icon>
+              </button>
+          </mat-list-item>                      
+        </mat-list> 
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="accent" (click)="showCreateCuenta()" >Agregar</button>        
+      </mat-card-actions>
+</mat-card>
+<mat-card id="cuenta" *ngIf="cuenta">
+    <mat-card-title *ngIf="cuenta.id">Cuenta # {{cuenta.id | number : '3.0-0'}}</mat-card-title>
+    <mat-card-title *ngIf="!cuenta.id">Crear cuenta</mat-card-title>
+    <mat-form-field>
+      <input matInput [(ngModel)]="cuenta.nombre" placeholder="Nombre">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select [(ngModel)]="cuenta.tipoCuenta" placeholder="Tipo de cuenta">
+          <mat-option *ngFor="let tipoCuenta of getTiposCuenta()" [value]="tipoCuenta">{{tipoCuenta}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-flat-button *ngIf="!cuenta.id" color="primary" (click)="createCuenta()" style="float:left">Crear</button>
+      <button mat-flat-button *ngIf="cuenta.id" color="primary" (click)="updateCuenta()" style="float:left">Actualizar</button>
+      <button mat-flat-button color="accent" (click)="getCuentas()" style="float:right">Cancelar</button>
+    </div>
+</mat-card>
