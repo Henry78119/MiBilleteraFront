@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Cuenta } from 'src/app/logica/entidades/cuenta';
-import { CuentaService } from 'src/app/logica/cuenta.service';
+import { CuentaService } from 'src/app/logica/servicios/cuenta.service';
 import { TipoCuenta } from 'src/app/logica/entidades/tipo_cuenta';
 
 @Component({
@@ -42,8 +42,8 @@ export class CuentaComponent implements OnInit {
   }
 
   createCuenta(){
-    this.cuentaService.createCuenta(this.cuenta).subscribe();
-    this.getCuentas();
+    this.cuentaService.createCuenta(this.cuenta).subscribe((result)=>this.getCuentas());
+    //this.getCuentas();
   }
 
   showUpdateCuenta(cuenta: Cuenta){
@@ -51,8 +51,7 @@ export class CuentaComponent implements OnInit {
   }
 
   updateCuenta(){
-    this.cuentaService.updateCuenta(this.cuenta).subscribe();
-    this.getCuentas();
+    this.cuentaService.updateCuenta(this.cuenta).subscribe((result)=>this.getCuentas());    
   }
 
 }

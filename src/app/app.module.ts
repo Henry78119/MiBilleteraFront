@@ -11,19 +11,24 @@ import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material';
+import {MatInputModule, MatNativeDateModule} from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
 import { HttpClientModule }    from '@angular/common/http';
+import { ReporteComponent } from './presentacion/reporte/reporte.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     CuentaComponent,
-    MovimientoComponent
+    MovimientoComponent,
+    ReporteComponent
   ],
   imports: [
     BrowserModule,
@@ -32,9 +37,10 @@ import { HttpClientModule }    from '@angular/common/http';
     BrowserAnimationsModule, HttpClientModule,
     MatGridListModule, MatCardModule, MatTableModule,
     MatToolbarModule, MatListModule, MatIconModule, 
-    MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule
+    MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule,
+    MatTabsModule, MatDatepickerModule, MatNativeDateModule 
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

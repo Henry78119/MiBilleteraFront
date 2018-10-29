@@ -1,0 +1,141 @@
+<br/>
+<mat-tab-group>
+  <mat-tab label="Categoria">
+    <mat-card class="form" >      
+      <mat-form-field>
+        <mat-select [(ngModel)]="tipoCategoria" 
+            (ngModelChange)="getCategoriasMovimiento()"
+            placeholder="Tipo" required>
+          <mat-option *ngFor="let tipoCategoria of tiposCategoria" [value]="tipoCategoria">{{tipoCategoria.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select [(ngModel)]="categoriaMovimiento"               
+            placeholder="Categoria" required>
+          <mat-option *ngFor="let categoriaMovimiento of categoriasMovimiento" [value]="categoriaMovimiento">{{categoriaMovimiento.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div>
+        <button mat-flat-button color="primary" (click)="calcularReporteCategoria()" style="float:right">Calcular</button>
+      </div>
+    </mat-card>
+    <br/>
+    <mat-tab-group>
+      <mat-tab label="Tabla">
+        <table mat-table [dataSource]="movimientosCategoria" class="table">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let movimiento"> {{movimiento.id}} </td>
+          </ng-container>
+          <ng-container matColumnDef="valor">
+            <th mat-header-cell *matHeaderCellDef> Valor </th>
+            <td mat-cell *matCellDef="let movimiento"> {{movimiento.valor | currency : COP}} </td>
+          </ng-container>
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef> Fecha </th>
+            <td mat-cell *matCellDef="let movimiento"> {{movimiento.fecha | date}} </td>
+          </ng-container>
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+            <td mat-cell *matCellDef="let movimiento"> {{movimiento.descripcion}} </td>
+          </ng-container>
+          <ng-container matColumnDef="cuenta">
+            <th mat-header-cell *matHeaderCellDef> Cuenta </th>
+            <td mat-cell *matCellDef="let movimiento"> {{movimiento.cuenta.nombre}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnasCategoria"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnasCategoria;"></tr>
+        </table>
+      </mat-tab>
+      <mat-tab label="Grafica">
+          <canvas #canvasGraficaCategoria width="600" height="400" style="border:1px solid #CCC;"></canvas> 
+      </mat-tab>
+    </mat-tab-group>    
+  </mat-tab>
+  <mat-tab label="Periodo">
+    <mat-card class="form" >      
+      <mat-form-field>
+        <input matInput [matDatepicker]="fechaInicialDP" placeholder="Fecha inicial" [(ngModel)]="fechaInicial"  required>
+        <mat-datepicker-toggle matSuffix [for]="fechaInicialDP"></mat-datepicker-toggle>
+        <mat-datepicker #fechaInicialDP></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput [matDatepicker]="fechaFinalDP" placeholder="Fecha final" [(ngModel)]="fechaFinal" required>
+        <mat-datepicker-toggle matSuffix [for]="fechaFinalDP"></mat-datepicker-toggle>
+        <mat-datepicker #fechaFinalDP></mat-datepicker>
+      </mat-form-field>
+      <div>
+        <button mat-flat-button color="primary" (click)="calcularReportePeriodo()" style="float:right">Calcular</button>
+      </div>
+    </mat-card>
+    <br/>
+    <mat-tab-group>
+        <mat-tab label="Tabla">
+    <table mat-table [dataSource]="movimientosPeriodo" class="table">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let movimiento"> {{movimiento.id}} </td>
+      </ng-container>
+      <ng-container matColumnDef="valor">
+        <th mat-header-cell *matHeaderCellDef> Valor </th>
+        <td mat-cell *matCellDef="let movimiento"> {{movimiento.valor | currency : COP}} </td>
+      </ng-container>
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef> Fecha </th>
+        <td mat-cell *matCellDef="let movimiento"> {{movimiento.fecha | date}} </td>
+      </ng-container>
+      <ng-container matColumnDef="descripcion">
+        <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+        <td mat-cell *matCellDef="let movimiento"> {{movimiento.descripcion}} </td>
+      </ng-container>
+      <ng-container matColumnDef="categoria">
+          <th mat-header-cell *matHeaderCellDef> Categoria </th>
+          <td mat-cell *matCellDef="let movimiento"> {{movimiento.idCategoriaMovimiento.nombre}} </td>
+        </ng-container>
+        <ng-container matColumnDef="tipo">
+          <th mat-header-cell *matHeaderCellDef> Tipo </th>
+          <td mat-cell *matCellDef="let movimiento"> {{movimiento.idCategoriaMovimiento.idTipoCategoria.nombre}} </td>
+        </ng-container>
+      <ng-container matColumnDef="cuenta">
+        <th mat-header-cell *matHeaderCellDef> Cuenta </th>
+        <td mat-cell *matCellDef="let movimiento"> {{movimiento.cuenta.nombre}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnasPeriodo"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnasPeriodo;"></tr>
+    </table>
+  </mat-tab>
+  <mat-tab label="Grafica">
+      <canvas #canvasGraficaPeriodo width="600" height="400" style="border:1px solid #CCC;"></canvas>
+  </mat-tab>
+</mat-tab-group>  
+    
+  </mat-tab>
+  <mat-tab label="Ingresos/Egresos">
+    <mat-card class="form" >            
+      <div>
+        <button mat-flat-button color="primary" (click)="calcularReporteIngresosEgresos()" style="float:right">Calcular</button>
+      </div>
+    </mat-card>
+    <br/>
+    <mat-tab-group>
+        <mat-tab label="Tabla">
+    <table mat-table [dataSource]="ingresosEgresos" class="table"> 
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let item"> {{item.nombre}} </td>
+      </ng-container>     
+      <ng-container matColumnDef="sumatoria">
+        <th mat-header-cell *matHeaderCellDef> Valor </th>
+        <td mat-cell *matCellDef="let item"> {{item.sumatoria | currency : COP}} </td>
+      </ng-container>      
+      <tr mat-header-row *matHeaderRowDef="columnasIngresosEgresos"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnasIngresosEgresos;"></tr>
+    </table>
+  </mat-tab>
+  <mat-tab label="Grafica">
+      <canvas #canvasGraficaIngresosEgresos width="400" height="400" style="border:1px solid #CCC;"></canvas>
+  </mat-tab>
+</mat-tab-group>  
+    
+  </mat-tab>
+</mat-tab-group>

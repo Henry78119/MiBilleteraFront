@@ -40,15 +40,29 @@
         <mat-form-field>
           <mat-select [(ngModel)]="tipoCategoria" 
               (ngModelChange)="getCategoriasMovimiento()"
-              placeholder="Tipo">
+              placeholder="Tipo" required>
             <mat-option *ngFor="let tipoCategoria of tiposCategoria" [value]="tipoCategoria">{{tipoCategoria.nombre}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field>
           <mat-select [(ngModel)]="movimiento.idCategoriaMovimiento"               
-              placeholder="Categoria" >
+              placeholder="Categoria" required>
             <mat-option *ngFor="let categoriaMovimiento of categoriasMovimiento" [value]="categoriaMovimiento">{{categoriaMovimiento.nombre}}</mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field *ngIf="tipoCategoria && tipoCategoria.id == 3">
+          <mat-select [(ngModel)]="cuentaDestino"               
+              placeholder="Destino" required>
+            <mat-option *ngFor="let cuenta of cuentas" [value]="cuenta">{{cuenta.nombre}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="movimiento.descripcion" placeholder="Descripcion" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [(ngModel)]="movimiento.valor" placeholder="Valor" required>
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="createMovimiento()" >Crear</button>
+      <button mat-flat-button color="accent" routerLink="/cuentas" >Volver</button>
     </mat-card-content>
 </mat-card>
